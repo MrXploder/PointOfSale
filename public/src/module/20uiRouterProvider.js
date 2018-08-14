@@ -21,10 +21,10 @@
 			controllerAs: "hmc",
 			data: resolve,
 		})
-		.state('dashboard', {
-			url: '/dashboard',
-			templateUrl: 'src/module/route/dashboard/template.html',
-			controller: "vendorController",
+		.state('pos', {
+			url: '/pos',
+			templateUrl: 'src/module/route/pos/template.html',
+			controller: "posController",
 			controllerAs: "$ctrl",
 			data: resolve,
 		})

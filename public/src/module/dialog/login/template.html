@@ -1,10 +1,28 @@
 <div>
 	<ng-form name="lgForm">
-		<h2 class="form-signin-heading">Please sign in</h2>
-		<label for="inputEmail" class="sr-only">Email address</label>
-		<input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="$crtl.form.email" required autofocus>
-		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="$ctrl.form.password" required>
-		<button class="btn btn-lg btn-primary btn-block" ng-click="$ctrl.login()">Sign in</button>
-	</form>
+		<div class="row">
+			<div class="col-lg-12">
+				<h2 class="form-signin-heading">Porfavor Inicia Sesión</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<label>R.U.T</label>
+				<input type="email" class="form-control" ng-model="$crtl.form.email" ng-rut required>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-lg-12">
+				<label>Contraseña</label>
+				<input type="password" class="form-control" ng-model="$ctrl.form.password" required>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-lg-12">
+				<button class="btn btn-lg btn-primary btn-block" ng-click="$ctrl.login()">Iniciar</button>
+			</div>
+		</div>
+	</ng-form>
 </div>

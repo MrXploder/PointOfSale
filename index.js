@@ -1,21 +1,30 @@
-(function(){
-	const path       = require('path');
-	const express    = require('express');
-	const mongoose   = require('mongoose');
-	const bodyParser = require('body-parser');
+const express    = require('express');
+const path       = require('path');
+const mongoose   = require('mongoose');
+const bodyParser = require('body-parser');
+const app				 = express();
 
-	const app = express();
+var livereload = require('livereload');
+var server = livereload.createServer();
+server.watch(__dirname + "/public");
 
-	mongoose.connect('mongodb://localhost:27017/EXM', { useNewUrlParser: true });
-	mongoose.Promise = require('bluebird');
+/*MongoDB connection*/
+mongoose.connect('mongodb://localhost:27017/PointOfSale', { useNewUrlParser: true });
+mongoose.Promise = require('bluebird');
 
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({extended: false}));
+/*Parse all the requests body's with bodyParser and return a JSON*/
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-	app.use('/', express.static(path.join(__dirname, 'public')));
+/*Make the folder "public" a static asset folder*/
+app.use('/', express.static(path.join(__dirname, 'public')));
 
-	app.use('/EX', require('./router/EX'));
+/*Routes definitions for the rest-api goes here*/
+app.use('/operators', require('./router/Operators'));
+app.use('/products', require('./router/Products'));
+app.use('/invoices', require('./router/Invoices'));
+/***********************************************/
 
-	app.listen(3000);
-	console.log('EXS Stack Running at port 3000...');
-})();
+/*Start the server*/
+app.listen(3000);
+console.log('PointOfSale Stack Running at port 3000...');

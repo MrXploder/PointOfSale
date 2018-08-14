@@ -35,10 +35,10 @@
 				var waitForRenderAndPrint = function () {
 					if (printScope.$$phase || $http.pendingRequests.length) {
 						$timeout(waitForRenderAndPrint, 1000);
-					} 
+					}
 					else {
 						/* Replace printHtml with openNewWindow for debugging*/
-						openNewWindow(element.html()).then(function () {
+						printHtml(element.html()).then(function () {
 							$rootScope.isBeingPrinted = false;
 							renderAndPrintPromise.resolve();
 						});

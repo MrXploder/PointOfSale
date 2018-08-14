@@ -18,6 +18,7 @@ module.exports = function(grunt) {
         wrap: true,
         deps: [
         'ui.router',
+        'ui.bootstrap',
         'ngStorage',
         'ngResource',
         'ngDialog',
