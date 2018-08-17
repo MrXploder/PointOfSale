@@ -14,7 +14,8 @@
 		full_name: {type: String, required: true},
 		nick_name: {type: String, required: true},
 		password: {type: String, required: true},
-		branch: Schema.Types.ObjectId,
+		branch_id: Schema.Types.ObjectId,
+		level: Number,
 	});
 
 	module.exports = mongoose.model('Operators', OperatorsSchema);

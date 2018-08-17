@@ -4,61 +4,76 @@
 * @company "EleDevelopment SpA."
 * @date		 "May/2018"
 * @about   "This is a Run method from AngularJS that handles
-					 the initialization of the ngStorage enviroment variables"
+the initialization of the ngStorage enviroment variables"
 *
 */
 (function(){
 	angular
 	.module('angularApp')
-	.run(support);
+	.run(runBlock);
 
-	support.$inject = ["$rootScope", "$localStorage", "loginModal", "$state"];
+	runBlock.$inject = ["$rootScope", "$localStorage", "$sessionStorage", "loginModal", "$state", "Operators", "OperatorsLocal", "Products", "ProductsLocal", "ngDialog", "Invoices", "InvoicesLocal"];
 
-	function support($rootScope, $localStorage, loginModal, $state){
-		var _default = {
-			currentLicense: {
-				key: null,
-				status: null,
-			},
-			currentUser: {
-				id: null,
-				name: null,
-				token: null,
-			},
-			filterParams: {
-				filterByApplicant: '',
-				filterByClient: '-1',
-				filterCompletedOnes: false,
-				pagesToShow: 5,
-				itemsPerPage: 5,
-				searchTerm: '',
-				sortBy: 'id',
-				sortReverse: false,
-			}
-		};
+	function runBlock($rootScope, $localStorage, $sessionStorage, loginModal, $state, Operators, OperatorsLocal, Products, ProductsLocal, ngDialog, Invoices, InvoicesLocal){
+		/*alias for convenience - this ones will be all over the app, so try to remember them*/
+		$db 				 = $localStorage;
 
-		activate();
-		//////////////////////////////////////////
+		if(_.isEmpty($db.operators) || _.isEmpty($db.products) || _.isEmpty($db.branch) || _.isEmpty($db.invoices)){
+			console.log("La base de datos interna está vacia, por lo que significa que es la primera vez que se usa la aplicacion. Un Operador nivel 3 debe iniciar sesion primero. Para habilitar la App.");
+			ngDialog.openConfirm({
+				templateUrl: "src/module/dialog/populate/template.html",
+				controller: "populateController",
+				controllerAs: "$ctrl",
+			})
+			.then(function(response){
+				updateLocalDB();
+				attachRouterEvents();
+			});
+		}
+		else if(_.isEmpty($sessionStorage.currentUser)){
+			loginModal()
+			.then(() => {
+				updateLocalDB();
+				attachRouterEvents();
+			});
+		}
+		else{
+			updateLocalDB();
+			attachRouterEvents();
+		}
 
-		function activate(){
-			if(typeof $localStorage.currentUser === "undefined"){
-				$localStorage.currentUser = _default.currentUser;
-			}
-
+		function attachRouterEvents(){
+			/*attach angularjs-eventListener (this are angularjs events BTW)*/
 			$rootScope.$on('$stateChangeStart', function(event, toState, toParams){
-				let requireLogin = toState.data.requireLogin;
+				let requireLogin 				= toState.data.requireLogin;
+				let requireDbPopulation = toState.data.requireDbPopulation;
 
-				if(requireLogin && typeof $localStorage.currentUser === "undefined"){
-					event.preventDefault();
-
-					loginModal().then(function(){
-						return $state.go(toState.name, toParams);
+				if(requireLogin && typeof $sessionStorage.currentUser === "undefined"){
+					event.preventDefault(); /*prevent from change the URL*/
+					loginModal()
+					.then(function(){
+						$state.go(toState.name, toParams); /*passtrough*/
 					})
 					.catch(function(){
-						return $state.go('home');
+						$state.go('home'); /*redirect to home*/
 					});
 				}
 			});
+		}
+
+		function updateLocalDB(){
+			/*update localDB based on the given branch._id stored on localStorage.branch._id*/
+			let branch = $db.branch._id;
+
+			Promise
+			.all([Operators.find({branch}), Products.find({branch}), Invoices.find({branch})])
+			.then(responseArray => {
+				OperatorsLocal.store(responseArray[0]);
+				ProductsLocal.store(responseArray[1]);
+				InvoicesLocal.store(responseArray[2]);
+				console.log("done!");
+			})
+			.catch(() => console.log("fatal error!"));
 		}
 	}
 })();

@@ -24,7 +24,8 @@ module.exports = function(grunt) {
         'ngDialog',
         'platanus.rut',
         'angular-loading-bar',
-        'angularUtils.directives.dirPagination'
+        'angularUtils.directives.dirPagination',
+        'angular-local-resource'
         ],
         dest: "public/src/module/10index.js",
         name: 'angularApp'

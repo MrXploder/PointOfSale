@@ -23,6 +23,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/operators', require('./router/Operators'));
 app.use('/products', require('./router/Products'));
 app.use('/invoices', require('./router/Invoices'));
+app.use('/branches', require('./router/Branches'));
+app.use('/auth', require('./router/Auth'));
 /***********************************************/
 
 /*Start the server*/

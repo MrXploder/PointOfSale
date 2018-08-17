@@ -8,11 +8,17 @@
 	.module('angularApp')
 	.controller('mainController', mainController);
 
-	mainController.$inject = ["$scope", "$localStorage", "$window", "$rootScope", "ENV"];
+	mainController.$inject = ["$scope", "$localStorage", "$sessionStorage"];
 
-	function mainController($scope, $localStorage, $window, $rootScope, ENV){
-		var mc = this;
-		$scope.$storage = $localStorage;
+	function mainController($scope, $localStorage, $sessionStorage){
+		let $mc = this;
+		$scope.$storage = $sessionStorage;
 
+		activate();
+		///////////////////////////////////////////////////
+
+		function activate(){
+			
+		}
 	}
 })();

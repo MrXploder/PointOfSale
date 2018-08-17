@@ -33,6 +33,13 @@
     });
   });
 
+  /*DEFINE A GENERAL GET, TO FETCH ALL THE RESOURCES FROM DB*/
+  ProductsRouter.get('/branch/:branch', function(req, res, next){
+    ProductsModel.find({branch_id: req.params.branch}).lean().then(function(products){
+      res.send(products);
+    });
+  });
+
   /*BASED ON PREVIUS ROUTER.PARAM, DEFINE GET, PUT AND DELETE FOR THAT PARAM*/
   ProductsRouter.route('/:productId')
   .get(function(req, res, next){

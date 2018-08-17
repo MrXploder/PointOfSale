@@ -3,11 +3,12 @@
 
 	angular
 	.module('angularApp')
-	.config(localStorageConfig);
+	.config(angularStorageProvider);
 
-	localStorageConfig.$inject  = ["$localStorageProvider"];
+	angularStorageProvider.$inject  = ["$localStorageProvider", "$sessionStorageProvider"];
 
-	function localStorageConfig($localStorageProvider){
+	function angularStorageProvider($localStorageProvider, $sessionStorageProvider){
 		$localStorageProvider.setKeyPrefix('PointOfSale-');
+		$sessionStorageProvider.setKeyPrefix('PointOfSale-');
 	}
 })();

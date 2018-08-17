@@ -1,32 +1,38 @@
 .middle{
-  vertical-align: middle;;
+	vertical-align: middle;;
 }
 
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .navbar {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 a{
-    cursor: pointer;
+	cursor: pointer;
 }
 
 nav{
--webkit-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
--moz-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
-}
-
-.tfoot-condensed > tfoot > tr > th,
-.tfoot-condensed > tfoot > tr > td {
-  padding: 5px;
+	-webkit-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
+	-moz-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
+	box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
 }
 
 tbody > tr > th,
 tbody > tr > td{
 	vertical-align: middle !important;
+}
+
+.center-thead > tr > th{
+	text-align: center;
+}
+
+.table-centered > thead > tr > th,
+.table-centered > thead > tr > td,
+.table-centered > tbody > tr > th,
+.table-centered > tbody > tr > td{
+	text-align: center;
 }

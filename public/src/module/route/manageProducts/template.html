@@ -1,0 +1,32 @@
+<div class="col-lg-8 col-lg-offset-2">
+	<div class="panel panel-default">
+		<div class="panel-heading" style="text-align: center;">
+			Administrar Productos
+		</div>
+		<div class="panel-body">
+			<table class="table table-centered table-hover table-bordered">
+				<thead>
+					<tr class="info">
+						<th>#</th>
+						<th>Codigo</th>
+						<th>Nombre</th>
+						<th>Stock</th>
+						<th>Precio Unitario</th>
+						<th>Editar</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr dir-paginate="product in $ctrl.products | itemsPerPage: 10 track by product._id">
+						<td>{{product._id}}</td>
+						<td>{{product.code}}</td>
+						<td>{{product.name}}</td>
+						<td>{{product.stock}}</td>
+						<td>{{product.price | currency:'$':0}}</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

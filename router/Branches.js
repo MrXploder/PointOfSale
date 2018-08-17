@@ -1,25 +1,25 @@
-d/*
+/*
 *@author: MrXploder
 *@url: https://mrxploder.github.io/MrXploder/
 *@date: 08/2018
-*@description: Categories Router File for Express
+*@description: Branches Router File for Express
 *@methods: GET, POST, PUT, DELETE.
 */
 (function() {
-  const CategoriesRouter  = require('express').Router();
-  const CategoriesModel = require('../model/Categories');
+  const BranchesRouter  = require('express').Router();
+  const BranchesModel = require('../model/Branches');
 
   /*INITIALIZE A PARAM THAT IS USED MULTIPLE TIMES*/
-  CategoriesRouter.param('categoryId', function(req, res, next){
-    CategoriesModel.findById(req.params.categoryId).then(function(category){
-      req.item = category;
+  BranchesRouter.param('branchId', function(req, res, next){
+    BranchesModel.findById(req.params.branchId).then(function(branch){
+      req.item = branch;
       next();
     });
   });
 
   /*DEFINE A GENERAL POST, NOT BINDED BY ANY ESPECIFIC ID*/
-  CategoriesRouter.post('/', function(req, res, next){
-    let item = new CategoriesModel(req.body);
+  BranchesRouter.post('/', function(req, res, next){
+    let item = new BranchesModel(req.body);
     console.log(item);
     item.save().then(function(item){
       res.send(item);
@@ -27,14 +27,14 @@ d/*
   });
 
   /*DEFINE A GENERAL GET, TO FETCH ALL THE RESOURCES FROM DB*/
-  CategoriesRouter.get('/', function(req, res, next){
-    CategoriesModel.find({}).lean().then(function(categories){
-      res.send(categories);
+  BranchesRouter.get('/', function(req, res, next){
+    BranchesModel.find({}).lean().then(function(branches){
+      res.send(branches);
     });
   });
 
   /*BASED ON PREVIUS ROUTER.PARAM, DEFINE GET, PUT AND DELETE FOR THAT PARAM*/
-  CategoriesRouter.route('/:categoryId')
+  BranchesRouter.route('/:branchId')
   .get(function(req, res, next){
     res.send(req.item);
   })
@@ -51,5 +51,5 @@ d/*
   });
 
   /*EXPORT ROUTER*/
-  module.exports = CategoriesRouter;
+  module.exports = BranchesRouter;
 })();

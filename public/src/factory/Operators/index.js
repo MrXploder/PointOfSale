@@ -3,12 +3,12 @@
 
 	angular
 	.module('angularApp')
-	.factory('Products', productsFactory);
+	.factory('Operators', operatorsFactory);
 
-	productsFactory.$inject = ['$resource'];
+	operatorsFactory.$inject = ['$resource'];
 
-	function productsFactory($resource){
-		const Resource = $resource("/products/branch/:branch", {
+	function operatorsFactory($resource){
+		const Resource = $resource("/operators/branch/:branch", {
 			branch: "@branch",
 		});
 

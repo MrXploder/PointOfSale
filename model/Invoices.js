@@ -10,8 +10,9 @@
 
 	/*Do not explicit declare "_id". Let mongoose handle it by default.*/
 	const InvoicesSchema = new Schema({
+		branch_id: Schema.Types.ObjectId,
 		operator_id: {type: Schema.Types.ObjectId, required: true, ref: 'Operators'},
-		cash_payment: {type: Number, min: 0, required: true},
+		pay_amount: {type: Number, min: 0, required: true},
 		product_list: [{
 			product_id: {type: Schema.Types.ObjectId, ref: 'Products'},
 			qty: Number,

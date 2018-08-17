@@ -9,6 +9,11 @@
   const OperatorsRouter  = require('express').Router();
   const OperatorsModel = require('../model/Operators');
 
+  String.prototype.toObjectId = function(){
+    let ObjectId = (require('mongoose').Types.ObjectId);
+    return new ObjectId(this.toString());
+  }
+
   /*INITIALIZE A PARAM THAT IS USED MULTIPLE TIMES*/
   OperatorsRouter.param('operatorId', function(req, res, next){
     OperatorsModel.findById(req.params.operatorId).then(function(operator){
@@ -29,6 +34,13 @@
   /*DEFINE A GENERAL GET, TO FETCH ALL THE RESOURCES FROM DB*/
   OperatorsRouter.get('/', function(req, res, next){
     OperatorsModel.find({}).lean().then(function(operators){
+      res.send(operators);
+    });
+  });
+
+  /*DEFINE A GENERAL GET, TO FETCH ALL THE RESOURCES FROM DB*/
+  OperatorsRouter.get('/branch/:branch', function(req, res, next){
+    OperatorsModel.find({branch_id: req.params.branch}).lean().then(function(operators){
       res.send(operators);
     });
   });

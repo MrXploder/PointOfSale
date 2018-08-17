@@ -9,7 +9,10 @@
 
 
 	function uiRouterProvider($stateProvider, $urlRouterProvider){
-		let resolve = {requireLogin: true};
+		let resolve = {
+			requireLogin: true,
+			requireDbPopulation: true,
+		};
 
 		$urlRouterProvider.when('', '/home');
 
@@ -26,6 +29,13 @@
 			templateUrl: 'src/module/route/pos/template.html',
 			controller: "posController",
 			controllerAs: "$ctrl",
+			data: resolve,
+		})
+		.state('products', {
+			url: '/manageProducts',
+			templateUrl: 'src/module/route/manageProducts/template.html',
+			controller: 'productsController',
+			controllerAs: '$ctrl',
 			data: resolve,
 		})
 	}

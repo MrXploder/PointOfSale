@@ -31,6 +31,13 @@ InvoicesRouter.get('/', function(req, res, next){
   });
 });
 
+/*DEFINE A GENERAL GET, TO FETCH ALL THE RESOURCES FROM DB*/
+InvoicesRouter.get('/branch/:branch', function(req, res, next){
+  InvoicesModel.find({branch_id: req.params.branch}).lean().then(function(invoices){
+    res.send(invoices);
+  });
+});
+
 /*BASED ON PREVIUS ROUTER.PARAM, DEFINE GET, PUT AND DELETE FOR THAT PARAM*/
 InvoicesRouter.route('/:invoiceId')
 .get(function(req, res, next){
