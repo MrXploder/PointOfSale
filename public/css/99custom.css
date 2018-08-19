@@ -2,23 +2,8 @@
 	vertical-align: middle;;
 }
 
-body {
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-.navbar {
-	margin-bottom: 20px;
-}
-
 a{
 	cursor: pointer;
-}
-
-nav{
-	-webkit-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
-	-moz-box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
-	box-shadow: 0px 23px 150px 24px rgba(176,170,176,0.87);
 }
 
 tbody > tr > th,

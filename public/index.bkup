@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es" ng-app="angularApp" ng-strict-di ng-controller="mainController as $mc">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PointOfSale</title>
+	<!-- start template tags -->
+	<link rel="stylesheet" href="css/20bootstrap.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<link rel="stylesheet" href="css/30spinkit.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<link rel="stylesheet" href="css/40fontawesome-all.min.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<link rel="stylesheet" href="css/50ngDialog.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<link rel="stylesheet" href="css/51ngDialog-theme-default.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<link rel="stylesheet" href="css/99custom.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"/>
+	<script src="src/vendor/10jquery.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/20angular.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/21angular-dirPagination.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/22angular-html5storage.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/23angular-loadingBar.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/24angular-resource.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/25angular-ui-router.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/26angular-dialogs.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/27angular-rut.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/28ui-bootstrap-tpls.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/29angular-local-resource.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/50moment.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/60lodash.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/70jquery.backtotop.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/vendor/71jquery.mobilemenu.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/10index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/20uiRouterProvider.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/21localStorageProvider.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/22ngDialogProvider.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/30run.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/40controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/autofocus/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/currency-input/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/inputAutocomplete/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/inputAutocomplete/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/inputSwitch/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/inputSwitch/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/login-sidebar/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/routeLoadingIndicator/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/stringToNumber/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/directive/toggle-button/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/Auth/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/Branches/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/BranchLocal/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/Invoices/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/InvoicesLocal/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/licenseVerificator/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/loginModal/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/Operators/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/OperatorsLocal/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/printer/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/Products/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/factory/ProductsLocal/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/filter/dateRange/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/filter/unique/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/dialog/login/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/dialog/pay/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/dialog/populate/index.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/route/home/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/route/manageProducts/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<script src="src/module/route/pos/controller.js?v=baa6e14f62e49bbd96693bb19d23b66b880acb1b"></script>
+	<!-- end template tags -->
+	<script>
+		document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+			':35729/livereload.js?snipver=1"></' + 'script>');
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" ui-sref="home">PointOfSale</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a ui-sref="pos" ui-sref-active="active"><i class="fas fa-credit-card"></i> POS</a></li>
+							<li ng-show=""><a ui-sref="products" ui-sref-active="active"><i class="fas fa-shopping-cart"></i> Productos</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a ui-sref="home" ui-sref-active="active">{{$storage.currentUser.full_name}}</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div class="row">
+				<ui-view></ui-view>
+			</div>
+		</div>
+	</body>
+	</html>

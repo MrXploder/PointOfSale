@@ -9,34 +9,40 @@
 
 
 	function uiRouterProvider($stateProvider, $urlRouterProvider){
-		let resolve = {
+		let requireBeforeChange = {
 			requireLogin: true,
-			requireDbPopulation: true,
 		};
 
 		$urlRouterProvider.when('', '/home');
 
 		$stateProvider
+		.state("login", {
+			url: "/login",
+			templateUrl: "src/module/route/login/template.html",
+			controller: "loginController",
+			controllerAs: "$ctrl",
+			data: {requireLogin: false},
+		})
 		.state('home', {
 			url: '/home',
 			templateUrl: "src/module/route/home/template.html",
 			controller: "homeController",
-			controllerAs: "hmc",
-			data: resolve,
+			controllerAs: "$ctrl",
+			data: requireBeforeChange,
 		})
 		.state('pos', {
 			url: '/pos',
 			templateUrl: 'src/module/route/pos/template.html',
 			controller: "posController",
 			controllerAs: "$ctrl",
-			data: resolve,
+			data: requireBeforeChange,
 		})
 		.state('products', {
 			url: '/manageProducts',
 			templateUrl: 'src/module/route/manageProducts/template.html',
 			controller: 'productsController',
 			controllerAs: '$ctrl',
-			data: resolve,
+			data: requireBeforeChange,
 		})
 	}
 })();

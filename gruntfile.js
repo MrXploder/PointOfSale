@@ -8,6 +8,18 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-obfuscator');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-sw-precache');
+
+  let _sources = [
+  'public/css/*.css',
+  'public/src/vendor/*.js',
+  'public/src/module/*.js',
+  'public/src/directive/**/*.js',
+  'public/src/factory/**/*.js',
+  'public/src/filter/**/*.js',
+  'public/src/module/dialog/**/*.js',
+  'public/src/module/route/**/*.js'
+  ];
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -18,14 +30,14 @@ module.exports = function(grunt) {
         wrap: true,
         deps: [
         'ui.router',
-        'ui.bootstrap',
         'ngStorage',
         'ngResource',
         'ngDialog',
         'platanus.rut',
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
-        'angular-local-resource'
+        'angular-local-resource',
+        'templates-main'
         ],
         dest: "public/src/module/10index.js",
         name: 'angularApp'
@@ -40,13 +52,16 @@ module.exports = function(grunt) {
       options: {
         base: "",
         module: 'templates-main',
+        rename: function(moduleName){
+           return moduleName.replace('public/', '');
+        }
       },
       main: {
         src: ['public/src/**/*.html'],
         dest: 'public/src/vendor/99angular-templates.js'
       },
       dev: {
-        src: ['server/dummy.html'],
+        src: ['empty.html'],
         dest: 'public/src/vendor/99angular-templates.js'
       }
     },
@@ -58,37 +73,36 @@ module.exports = function(grunt) {
           openTag: '<!-- start template tags -->',
           closeTag: '<!-- end template tags -->'
         },
-        src: [
-        'public/css/*.css',
-        'public/src/vendor/*.js',
-        'public/src/module/*.js',
-        'public/src/directive/**/*.js',
-        'public/src/factory/**/*.js',
-        'public/src/filter/**/*.js',
-        'public/src/module/dialog/**/*.js',
-        'public/src/module/route/**/*.js',
-        ],
+        src: _sources,
         dest: 'public/index.html'
-      }
+      },
+      prod: {
+        options: {
+          scriptTemplate: '<script src="{{ path }}"></script>',
+          linkTemplate: '<link rel="stylesheet" href="{{ path }}"/>',
+          openTag: '<!-- start template tags -->',
+          closeTag: '<!-- end template tags -->'
+        },
+        src: ['public/dist/*'],
+        dest: 'public/index.html'
+      },
     },
     concat: {
       options: {
         separator: '\n',
       },
       js: {
-        src: [
-        'public/src/vendor/*.js',
+        src: ['public/src/vendor/*.js',
         'public/src/module/*.js',
         'public/src/directive/**/*.js',
         'public/src/factory/**/*.js',
         'public/src/filter/**/*.js',
         'public/src/module/dialog/**/*.js',
-        'public/src/module/route/**/*.js'
-        ],
+        'public/src/module/route/**/*.js'],
         dest: 'public/dist/<%= gitinfo.local.branch.current.SHA %>.js',
       },
       css:{
-        src: ['css/*.css'],
+        src: ['public/css/*.css'],
         dest: 'public/dist/<%= gitinfo.local.branch.current.SHA %>.css',
       }
     },
@@ -120,19 +134,35 @@ module.exports = function(grunt) {
         }
       }
     },
+
     clean: {
       options: {
-        'no-write': false
+        'no-write': true
       },
       src_folder: ['public/src/'],
       tmp_folder: ['tmp/'],
       css_folder: ['css/'],
       final_cleanup: ['public/dist/*.css', 'public/dist/*.js', '!public/dist/*.min.css', '!public/dist/*.min.obs.js'],
-    }
+    },
+
+    'sw-precache': {
+      options: {
+        cacheId: 'PointOfSale',
+        workerFileName: 'sw.js',
+        verbose: true,
+      },
+      default: {
+        staticFileGlobs: [
+        'dist/<%= gitinfo.local.branch.current.SHA %>.min.js',
+        'dist/<%= gitinfo.local.branch.current.SHA %>.min.css',
+        ],
+      }
+    },
   });
 
-
-
-  grunt.registerTask('build', ['gitinfo', 'ngconstant', 'html2js:main',  'html2js', 'concat', 'uglify', 'cssmin', 'obfuscator', 'clean']);
+  grunt.registerTask('build', ['gitinfo', 'ngconstant', 'html2js:main', 'concat', 'uglify', 'cssmin', 'obfuscator', 'tags:prod', 'sw-precache', 'clean']);
+  grunt.registerTask('pre-build', ['gitinfo', 'ngconstant', 'html2js:main', 'concat', 'uglify', 'cssmin', 'obfuscator']);
   grunt.registerTask('dev', ['gitinfo', 'ngconstant', 'html2js:dev', 'tags']);
+  grunt.registerTask('sw', ['sw-precache']);
+
 };

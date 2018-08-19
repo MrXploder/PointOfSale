@@ -1,9 +1,9 @@
 (function(angular, undefined) {
 'use strict';
 
-angular.module('angularApp', ['ui.router', 'ui.bootstrap', 'ngStorage', 'ngResource', 'ngDialog', 'platanus.rut', 'angular-loading-bar', 'angularUtils.directives.dirPagination', 'angular-local-resource'])
+angular.module('angularApp', ['ui.router', 'ngStorage', 'ngResource', 'ngDialog', 'platanus.rut', 'angular-loading-bar', 'angularUtils.directives.dirPagination', 'angular-local-resource', 'templates-main'])
 
-.constant('ENV', {SHA:'8d72a7a211e47433e1de47d5070c2b1703b9e535',lastCommitMessage:'"just in case\r\n"',lastCommitAuthor:'"MrXploder"',shortSHA:'8d72a7a',currentUser:'MrXploder',name:'master',lastCommitTime:'"2018-08-14 03:15:51 -0300"',lastCommitNumber:'2'})
+.constant('ENV', {lastCommitTime:'"2018-08-17 02:30:29 -0300"',currentUser:'MrXploder',shortSHA:'baa6e14',SHA:'baa6e14f62e49bbd96693bb19d23b66b880acb1b',name:'master',lastCommitMessage:'"progress\r\n"',lastCommitAuthor:'"MrXploder"',lastCommitNumber:'3'})
 
 ;
 })(angular);

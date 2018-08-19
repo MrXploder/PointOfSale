@@ -5,12 +5,12 @@
 	.module('angularApp')
 	.controller('posController', posController);
 
-	posController.$inject = ["$scope", "$sessionStorage", "InvoicesLocal", "ProductsLocal", "ngDialog"];
+	posController.$inject = ["$scope", "$sessionStorage", "Invoices", "Products", "ngDialog"];
 
-	function posController($scope, $sessionStorage, InvoicesLocal, ProductsLocal, ngDialog){
+	function posController($scope, $sessionStorage, Invoices, Products, ngDialog){
 		let $ctrl = this;
 
-		$ctrl.invoice 		 = new InvoicesLocal();
+		$ctrl.invoice 		 = new Invoices();
 		$ctrl.products     = [];
 		$ctrl.barCodeModel = "";
 		$ctrl.addToInvoice = addToInvoice;
@@ -22,7 +22,7 @@
 		//////////////////////////////////
 
 		function activate(){
-			ProductsLocal.find({}).then(function(products){
+			Products.find({}).then(function(products){
 				$ctrl.products = products;
 			});
 		}
@@ -34,7 +34,7 @@
 		}
 
 		function resetInvoice(){
-			$ctrl.invoice = new InvoicesLocal();
+			$ctrl.invoice = new Invoices();
 			$ctrl.barCodeModel = "";
 		}
 

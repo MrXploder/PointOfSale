@@ -1,2 +1,36 @@
-<div class="col-lg-12">
+<div class="carousel slide">
+	<div class="carousel-inner">
+		<div class="item active">
+			<img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+			<div class="container">
+				<div class="carousel-caption">
+					<h1>ESTIMADO<br>{{$currentUser().full_name | uppercase}}</h1>
+					<p>TODO LO QUE NECESITA PARA GESTIONAR SU NEGOCIO.</p>
+					<p class="visible-md visible-lg"><a class="btn btn-primary" ui-sref="pos">Ir &raquo;</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container marketing" ng-if="$currentUser().level > 1">
+	<div class="row">
+		<div class="col-lg-4">
+			<i class="fas fa-list-ol fa-10x"></i>
+			<h2>Inventario</h2>
+			<p>Resumen de Inventario, últimas revisiones realizadas, ordenar por escacez de mercaderia, etc. [...]</p>
+			<p><a class="btn btn-default" href="#" role="button">Ir &raquo;</a></p>
+		</div>
+		<div class="col-lg-4">
+			<i class="fas fa-chart-pie fa-10x"></i>
+			<h2>Ventas</h2>
+			<p>Revisar Compras y ventas, ordenadas por mes o dia, ver crecimiento de ganancias o rastrear horario punta de ventas, toda la informacion sobre el rendimiento de su negocio acá. [...]</p>
+			<p><a class="btn btn-default" href="#" role="button">Ir &raquo;</a></p>
+		</div>
+		<div class="col-lg-4">
+			<i class="fas fa-credit-card fa-10x"></i>
+			<h2>Contabilidad</h2>
+			<p>Lleve en orden el pago de sus impuestos, el descuento en notas de créditos, así como ofertas o deudas pendientes a su favor.</p>
+			<p><a class="btn btn-default" href="#" role="button">Ir &raquo;</a></p>
+		</div>
+	</div>
 </div>

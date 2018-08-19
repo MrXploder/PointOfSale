@@ -1,0 +1,41 @@
+<style type="text/css">
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+
+</style>
+
+<div class="form-signin">
+  <ng-form name="lgForm">
+    <div class="form-group">
+      <h2 class="form-signin-heading">Porfavor Inicia Sesión</h2>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" ng-model="$ctrl.form.rut" ng-rut placeholder="R.U.T." required>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" ng-model="$ctrl.form.password" ng-keypress="$event.which == 13 && lgForm.$valid && $ctrl.login()" placeholder="contraseña" required>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" ng-click="$ctrl.login()" ng-disabled="!lgForm.$valid">Iniciar</button>
+  </div>
+</div>
+</ng-form>
+</div>
