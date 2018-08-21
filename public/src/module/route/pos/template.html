@@ -1,7 +1,17 @@
 <div class="col-lg-8 col-lg-offset-2" style="padding: 60px 15px 0;">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<input type="text" class="form-control" placeholder="Codigo de Barras" ng-model="$ctrl.barCodeModel" ng-keypress="$event.which == 13 && $ctrl.addToInvoice()" autofocus ng-disabled="$ctrl.isPaying">
+			<div class="row">
+				<div class="col-lg-6">
+					<input type="string" class="form-control input-lg" placeholder="Codigo de Barras" ng-model="$ctrl.barCodeModel" ng-keypress="$event.which == 13 && $ctrl.addToInvoice.byCode($ctrl.barCodeModel)" ng-disabled="$ctrl.isPaying" focus-if="!$ctrl.mustFocus()">
+				</div>
+				<div class="col-lg-6">
+					<input type="text" class="form-control input-lg" list="autocomplete" placeholder="Nombre del Producto" ng-model="$ctrl.productNameModel" ng-keypress="$event.which == 13 && $ctrl.addToInvoice.byName($ctrl.productNameModel)" ng-disabled="$ctrl.isPaying" focus-if="$ctrl.mustFocus()">
+					<datalist id="autocomplete">
+						<option ng-repeat="product in $ctrl.products track by product._id">{{product.name}}</option>
+					</datalist>
+				</div>
+			</div>
 		</div>
 		<div class="panel-body">
 			<table class="table" style="table-layout: fixed">
@@ -11,7 +21,7 @@
 						<th style="text-align: center;">PRECIO</th>
 						<th style="text-align: center;">CANTIDAD</th>
 						<th style="text-align: center;">TOTAL</th>
-						<th style="text-align: center;">ELIMINAR</th>
+						<th style="text-align: center;">QUITAR</th>
 					</tr>
 				</thead>
 				<tfoot>

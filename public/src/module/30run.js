@@ -10,22 +10,22 @@ the initialization of the ngStorage enviroment variables"
 (function(){
 	angular
 	.module('angularApp')
-	.run(runBlock);
+	.run(run);
 
-	runBlock.$inject = ["$rootScope", "$localStorage", "$sessionStorage", "$state"];
+	run.$inject = ["$rootScope", "$localStorage", "$sessionStorage", "$state", "$filter"];
 
-	function runBlock($rootScope, $localStorage, $sessionStorage, $state){
-		/*alias for convenience - this ones will be all over the app, so try to remember them*/
-		$db 				 = $localStorage;
+	function run($rootScope, $localStorage, $sessionStorage, $state, $filter){
 		$rootScope.$currentUser = () => $sessionStorage.currentUser;
 
 		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
 			console.log("fromstate-->", fromState.name, "tostate-->", toState.name);
 			if(toState.data.requireLogin && !$sessionStorage.currentUser){
-				event.preventDefault(); /*prevent from change the URL*/
+				event.preventDefault();
 				console.log("going to login state");
-				$state.go("login"); /*redirect to login Page*/
+				$state.go("login");
 			}
 		});
+
+
 	}
 })();

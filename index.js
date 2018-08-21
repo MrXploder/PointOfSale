@@ -22,11 +22,12 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 /*Routes definitions for the rest-api goes here*/
 app.use('/operators', require('./router/Operators'));
 app.use('/products', require('./router/Products'));
+app.use('/promotions', require('./router/Promotions'));
 app.use('/invoices', require('./router/Invoices'));
 app.use('/branches', require('./router/Branches'));
 app.use('/auth', require('./router/Auth'));
 /***********************************************/
 
 /*Start the server*/
-app.listen(3000);
-console.log('PointOfSale Stack Running at port 3000...');
+app.listen(80);
+console.log('PointOfSale Stack Running at port 80...');

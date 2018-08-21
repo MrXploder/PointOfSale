@@ -12,6 +12,7 @@ const BranchModel = require('./model/Branches');
 const ProductsModel = require('./model/Products');
 const OperatorsModel = require('./model/Operators');
 const InvoicesModel = require('./model/Invoices');
+const PromotionsModel = require('./model/Promotions');
 
 let branch = new BranchModel({
 	_id: "5b7245b00000000000000000",
@@ -54,12 +55,25 @@ let invoice = new InvoicesModel({
 	pay_amount: 3000,
 	product_list: [{
 		product_id: "5b73c7b6ed191932a868b042",
-		"qty" : 1
+		qty: 1
 	}],
 	branch_id: "5b7245b00000000000000000",
 });
 
-Promise.all([branch.save(), operator.save(), operator_two.save(), product.save(), invoice.save()]).then(function(){
+let promotion = new PromotionsModel({
+	branch_id: "5b7245b00000000000000000",
+	name: "La Terrible Promo",
+	product_list: [{
+		product_id: "5b73c7b6ed191932a868b042",
+		qty: 1,
+	},{
+		product_id: "5b73c7b6ed191932a868b042",
+		qty: 1,
+	}],
+	discount: 50,
+});
+
+Promise.all([branch.save(), operator.save(), operator_two.save(), product.save(), invoice.save(), promotion.save()]).then(function(){
 	console.log("Populated MongoDB Successfuly");
 	process.exit();
 });

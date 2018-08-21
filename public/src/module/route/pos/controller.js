@@ -5,37 +5,81 @@
 	.module('angularApp')
 	.controller('posController', posController);
 
-	posController.$inject = ["$scope", "$sessionStorage", "Invoices", "Products", "ngDialog"];
+	posController.$inject = ["$scope", "$sessionStorage", "Invoices", "Products", "ngDialog", "$window", "$timeout", "Promotions"];
 
-	function posController($scope, $sessionStorage, Invoices, Products, ngDialog){
+	function posController($scope, $sessionStorage, Invoices, Products, ngDialog, $window, $timeout, Promotions){
 		let $ctrl = this;
 
-		$ctrl.invoice 		 = new Invoices();
+		$ctrl.invoice 		 = {};
 		$ctrl.products     = [];
 		$ctrl.barCodeModel = "";
-		$ctrl.addToInvoice = addToInvoice;
+		$ctrl.productNameModel = "";
+		$ctrl.addToInvoice = {byCode, byName};
+		$ctrl.focus 			 = false;
 		$ctrl.isPaying		 = false;
 		$ctrl.payInvoice   = payInvoice;
 		$ctrl.resetInvoice = resetInvoice;
+		$ctrl.mustFocus    = mustFocus;
 
 		activate();
 		//////////////////////////////////
 
 		function activate(){
+			$window.addEventListener("keypress", function(event){
+				$timeout(function(){
+					/*numbers*/
+					if(event.keyCode >= 48 && event.keyCode <= 57){
+						$ctrl.focus = false;
+						if($ctrl.productNameModel !== ""){
+							$ctrl.barCodeModel = $ctrl.productNameModel.slice(-1);
+							$ctrl.productNameModel = "";
+						}
+						else $ctrl.productNameModel = "";
+						$scope.$apply();
+					}
+					/*letters*/
+					else if(event.keyCode >= 97 && event.keyCode <= 122){
+						$ctrl.focus = true;
+						if($ctrl.barCodeModel !== ""){
+							$ctrl.productNameModel = $ctrl.barCodeModel.slice(-1);
+							$ctrl.barCodeModel = "";
+						}
+						else $ctrl.barCodeModel = "";
+						$scope.$apply();
+					}
+				});
+			});
+
 			Products.find({}).then(function(products){
 				$ctrl.products = products;
 			});
+
+			Promotions.find({}).then(function(promotions){
+				console.log(promotions);
+				$ctrl.invoice = new Invoices({promotions});
+			})
 		}
 
-		function addToInvoice(){
-			let element = $ctrl.products.find(item => item.code === $ctrl.barCodeModel);
-			if(typeof element !== "undefined") $ctrl.invoice.$add(element);
+		function mustFocus(){
+			if($ctrl.focus) return true;
+			else return false;
+		}
+
+		function byCode(){
+			console.log("trying!--->", $ctrl.barCodeModel, "PRODUCTS-->", $ctrl.products);
+			let product = $ctrl.products.find(item => item.code === $ctrl.barCodeModel);
+			if(typeof product !== "undefined") $ctrl.invoice.$add(product);
 			$ctrl.barCodeModel = "";
+		}
+
+		function byName(){
+			let product = $ctrl.products.find(item => item.name === $ctrl.productNameModel);
+			console.log("product----->><", product);
+			if(typeof product !== "undefined") $ctrl.invoice.$add(product);
+			$ctrl.productNameModel = "";
 		}
 
 		function resetInvoice(){
-			$ctrl.invoice = new Invoices();
-			$ctrl.barCodeModel = "";
 		}
 
 		function payInvoice(){

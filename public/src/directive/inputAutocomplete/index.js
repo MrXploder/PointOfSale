@@ -1,12 +1,11 @@
 (function(){
 	'use strict';
+	
 	angular
-		.module('angularApp')
-		.directive('inputAutocomplete', inputAutocomplete);
+	.module('angularApp')
+	.directive('inputAutocomplete', inputAutocompleteDirective);
 
-	//inputAutocomplete.$inject = [""];
-
-	function inputAutocomplete(){
+	function inputAutocompleteDirective(){
 		return {
 			restrict: 'E',
 			replace: true,

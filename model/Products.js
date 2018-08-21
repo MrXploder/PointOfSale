@@ -15,10 +15,6 @@
 		stock: {type: Number, required: true, min: 0},
 		price: {type: Number, required: true, min: 0},
 		branch_id: Schema.Types.ObjectId,
-		offer: [{
-			qty: Number,
-			price: Number,
-		}]
 	});
 
 	module.exports = mongoose.model('Products', ProductsSchema);

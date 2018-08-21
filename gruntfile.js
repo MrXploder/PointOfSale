@@ -9,21 +9,24 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-sw-precache');
+  grunt.loadNpmTasks('grunt-jsdoc');
 
   let _sources = [
   'public/css/*.css',
   'public/src/vendor/*.js',
   'public/src/module/*.js',
   'public/src/directive/**/*.js',
-  'public/src/factory/**/*.js',
-  'public/src/filter/**/*.js',
+  'public/src/factory/*.js',
+  'public/src/filter/*.js',
   'public/src/module/dialog/**/*.js',
   'public/src/module/route/**/*.js'
   ];
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     gitinfo: {},
+
     ngconstant: {
       options: {
         space: ' ',
@@ -37,6 +40,7 @@ module.exports = function(grunt) {
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
         'angular-local-resource',
+        'focus-if',
         'templates-main'
         ],
         dest: "public/src/module/10index.js",
@@ -48,12 +52,13 @@ module.exports = function(grunt) {
         }
       }
     },
+
     html2js: {
       options: {
         base: "",
         module: 'templates-main',
         rename: function(moduleName){
-           return moduleName.replace('public/', '');
+          return moduleName.replace('public/', '');
         }
       },
       main: {
@@ -65,8 +70,9 @@ module.exports = function(grunt) {
         dest: 'public/src/vendor/99angular-templates.js'
       }
     },
+
     tags: {
-      build: {
+      dev: {
         options: {
           scriptTemplate: '<script src="{{ path }}?v=<%= gitinfo.local.branch.current.SHA %>"></script>',
           linkTemplate: '<link rel="stylesheet" href="{{ path }}?v=<%= gitinfo.local.branch.current.SHA %>"/>',
@@ -87,6 +93,7 @@ module.exports = function(grunt) {
         dest: 'public/index.html'
       },
     },
+
     concat: {
       options: {
         separator: '\n',
@@ -106,6 +113,7 @@ module.exports = function(grunt) {
         dest: 'public/dist/<%= gitinfo.local.branch.current.SHA %>.css',
       }
     },
+
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
@@ -116,6 +124,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     cssmin: {
       options: {
         mergeIntoShorthands: false,
@@ -127,6 +136,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     obfuscator: {
       task1: {
         files: {
@@ -158,11 +168,18 @@ module.exports = function(grunt) {
         ],
       }
     },
-  });
 
+    move: {
+      test: {
+        src: 'old',
+        dest: 'new'
+      }
+    },
+  })
+
+  grunt.registerTask('document', ['jsdoc']);
   grunt.registerTask('build', ['gitinfo', 'ngconstant', 'html2js:main', 'concat', 'uglify', 'cssmin', 'obfuscator', 'tags:prod', 'sw-precache', 'clean']);
-  grunt.registerTask('pre-build', ['gitinfo', 'ngconstant', 'html2js:main', 'concat', 'uglify', 'cssmin', 'obfuscator']);
-  grunt.registerTask('dev', ['gitinfo', 'ngconstant', 'html2js:dev', 'tags']);
+  grunt.registerTask('dev', ['gitinfo', 'ngconstant', 'html2js:dev', 'tags:dev']);
   grunt.registerTask('sw', ['sw-precache']);
-
-};
+  grunt.registerTask('devfull', ['gitinfo', 'ngconstant', 'html2js:main', 'tags:dev']);
+}

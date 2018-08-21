@@ -13,7 +13,8 @@
 			requireLogin: true,
 		};
 
-		$urlRouterProvider.when('', '/home');
+		$urlRouterProvider.when('', '/home'); /*redirect to home if user loads a no-routed page e.x: host without #*/
+		$urlRouterProvider.otherwise('/home'); /*if state does not exists, redirect to home*/
 
 		$stateProvider
 		.state("login", {

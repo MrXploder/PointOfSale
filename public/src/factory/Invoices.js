@@ -5,9 +5,9 @@
 	.module('angularApp')
 	.factory('Invoices', invoicesFactory);
 
-	invoicesFactory.$inject = ['$localResource', "$localStorage", "$resource", "$sessionStorage", "$http"];
+	invoicesFactory.$inject = ['$localResource', "$localStorage", "$resource", "$sessionStorage", "$http", "Promotions"];
 
-	function invoicesFactory($localResource, $localStorage, $resource, $sessionStorage, $http){
+	function invoicesFactory($localResource, $localStorage, $resource, $sessionStorage, $http, Promotions){
 		const _resourceName = "invoices";
 		const Resource = $localResource(_resourceName);
 
@@ -77,6 +77,14 @@
 
 		/*calculates the discounts based on "Promotions" list*/
 		Resource.prototype.$getDiscounts = function(){
+			let self = this;
+			let accumulator;
+			console.log("internalProductList-->", self.product_list, "externalProductList-->", self.promotions);
+
+			// console.log("first group--->", _.groupBy(self.product_list, 'product_id._id'));
+			// for(let x of _.groupBy(self.product_list, 'product_id._id')){
+				// console.log("xxx-->", x);
+			// }
 			return 0;
 		}
 
@@ -100,7 +108,9 @@
 		/*adds a product to the current invoice productlist, _d param must be a valid product object*/
 		Resource.prototype.$add = function(_d){
 			if(!this.product_list) this.product_list = [];
-			this.product_list.push({product_id: _d, qty: 1});
+			let index = _.findIndex(this.product_list, ['product_id._id', _d._id]);
+			if(index >= 0) this.product_list[index].qty++;
+			else this.product_list.push({product_id: _d, qty: 1});
 		}
 
 		/*calculates the total amount of products in the invoice product list*/

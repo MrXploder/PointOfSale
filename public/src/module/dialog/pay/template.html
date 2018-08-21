@@ -6,7 +6,7 @@
 		</div>
 		<div class="form-group">
 			<label>Pago: </label>
-			<input type="text" class="form-control" ng-model="$vm.invoice.pay_amount" ng-init="$vm.invoice.pay_amount = 0" currency-input="" autofocus ng-keypress="$event.which == 13 && $vm.invoice.isValid() && $vm.commit()">
+			<input type="text" class="form-control" ng-model="$vm.invoice.pay_amount" ng-init="$vm.invoice.pay_amount = 0" currency-input="" autofocus ng-keypress="$event.which == 13 && $vm.invoice.$isValid() && $vm.commit()">
 		</div>
 		<div class="form-group">
 			<label>Vuelto: </label>
