@@ -9,7 +9,7 @@
 
 	function localResource($q, $localStorage){
 		function ResourceFactory(resource, defaults){
-			if(typeof $localStorage[resource] == "undefined"){
+			if(typeof $localStorage[resource] === "undefined"){
 				$localStorage[resource] = [];
 			}
 
@@ -34,14 +34,11 @@
 			}
 
 			function ObjectId(){
-				var m = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Math;
-				var d = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Date;
-				var h = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 16;
-				var s = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function (s) {
-					return m.floor(s).toString(h);
+				var s = function (s) {
+					return Math.floor(s).toString(16);
 				};
-				return s(d.now() / 1000) + ' '.repeat(h).replace(/./g, function () {
-					return s(m.random() * h);
+				return s(Date.now() / 1000) + ' '.repeat(16).replace(/./g, function () {
+					return s(Math.random() * 16);
 				});
 			}
 

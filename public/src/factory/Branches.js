@@ -33,7 +33,7 @@
 		}
 
 		/*this method gets all the resources from serverDB*/
-		Resource.$queryFromServer = function(_q){
+		Resource.$findInServer = function(_q){
 			const OriginResource = $resource(`/${_resourceName}/:id`, {id: "@_id"}, {create: {method: "POST"}, update: {method: "PUT"}});
 
 			OriginResource.prototype.$save = function(){

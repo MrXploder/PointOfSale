@@ -37,7 +37,7 @@
 					</tr>
 					<tr>
 						<th class="active">Descuento</th>
-						<td colspan="4">{{$ctrl.invoice.$getDiscounts() || "N/A"}}</td>
+						<td colspan="4">{{$ctrl.invoice.$getDiscounts() | currency:"$":0}}</td>
 					</tr>
 					<tr>
 						<th class="active">Total</th>
@@ -46,19 +46,19 @@
 				</tfoot>
 				<tbody class="info">
 					<tr ng-repeat="item in $ctrl.invoice.product_list track by $index">
-						<td>{{item.product_id.name}}</td>
-						<td style="text-align: center;">{{item.product_id.price | currency:"$":0}}</td>
+						<td>{{item.name}}</td>
+						<td style="text-align: center;">{{item.price | currency:"$":0}}</td>
 						<td style="text-align: center;">{{item.qty}}
 							<div class="btn-group-vertical btn-group-xs" role="group" aria-label="...">
 								<button type="button" class="btn btn-info" ng-click="$ctrl.invoice.$plusOne(item)"><i class="fas fa-plus"></i></button>
 								<button type="button" class="btn btn-info" ng-click="$ctrl.invoice.$minusOne(item)"><i class="fas fa-minus"></i></button>
 							</div>
 						</td>
-						<td style="text-align: center;">{{(item.product_id.price * item.qty) | currency:"$":0}}</td>
+						<td style="text-align: center;">{{(item.price * item.qty) | currency:"$":0}}</td>
 						<td style="text-align: center;"><button type="button" class="btn btn-danger" ng-click="$ctrl.invoice.$remove(item)"><i class="fas fa-times"></i></button></td>
 					</tr>
 					<tr ng-show="$ctrl.invoice.$length() === 0">
-						<td colspan="5" style="vertical-align: middle ;text-align: center; height: 100px">Boleta Vacía (Escanea un Codigo)</td>
+						<td colspan="5" style="vertical-align: middle; text-align: center; height: 100px">Boleta Vacía (Escanea un Codigo)</td>
 					</tr>
 				</tbody>
 			</table>

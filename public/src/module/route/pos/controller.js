@@ -66,7 +66,6 @@
 		}
 
 		function byCode(){
-			console.log("trying!--->", $ctrl.barCodeModel, "PRODUCTS-->", $ctrl.products);
 			let product = $ctrl.products.find(item => item.code === $ctrl.barCodeModel);
 			if(typeof product !== "undefined") $ctrl.invoice.$add(product);
 			$ctrl.barCodeModel = "";
@@ -74,7 +73,6 @@
 
 		function byName(){
 			let product = $ctrl.products.find(item => item.name === $ctrl.productNameModel);
-			console.log("product----->><", product);
 			if(typeof product !== "undefined") $ctrl.invoice.$add(product);
 			$ctrl.productNameModel = "";
 		}

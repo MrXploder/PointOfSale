@@ -37,14 +37,14 @@
 		}
 
 		/*this method gets all the resources from online DB*/
-		Resource.$queryFromServer = function(_q){
+		Resource.$findInServer = function(_q){
 			const OriginResource = $resource("/invoices/:id", {id: "@_id"}, {create: {method: "POST"}, update: {method: "PUT"}});
 
 			OriginResource.prototype.$save = function(){
 				let self = this;
 
 				self.product_list.forEach(function(item, index, array){
-					self.product_list[index]._id = angular.copy(self.product_list[index].product_id._id);
+					self.product_list[index]._id = angular.copy(self.product_list[index]._id);
 				});
 
 				if(!self.operator_id) self.operator_id = $sessionStorage.currentUser._id;
@@ -67,30 +67,36 @@
 		/*calculates the subtotal of the invoice -> the sum of all the products prices*/
 		Resource.prototype.$getSubTotal = function(){
 			if(!this.product_list) this.product_list = [];
-			return _.reduce(this.product_list, (total, item) => total += item.product_id.price * item.qty, 0);
+			return _.reduce(this.product_list, (total, item) => total += item.price * item.qty, 0);
 		}
 
 		/*calculates the subtotal taxes multiplying it by 0.19 I.V.A*/
 		Resource.prototype.$getTaxes = function(){
-			return this.$getSubTotal() * 0.19;
+			return (this.$getSubTotal() - this.$getDiscounts()) * 0.19;
 		}
 
 		/*calculates the discounts based on "Promotions" list*/
 		Resource.prototype.$getDiscounts = function(){
 			let self = this;
-			let accumulator;
-			console.log("internalProductList-->", self.product_list, "externalProductList-->", self.promotions);
+			let accumulator = 0;
 
-			// console.log("first group--->", _.groupBy(self.product_list, 'product_id._id'));
-			// for(let x of _.groupBy(self.product_list, 'product_id._id')){
-				// console.log("xxx-->", x);
-			// }
-			return 0;
+			_(self.promotions).forEach(function(promotion){
+				_(promotion.product_list).forEach(function(productInPromotion){
+					let product = _.find(self.product_list, function(el){
+						return (el.qty >= productInPromotion.qty && el._id === productInPromotion.product_id);
+					});
+					if(product){
+						accumulator += (product.price * productInPromotion.qty) * (promotion.discount / 100);
+					}
+				});
+			});
+
+			return accumulator;
 		}
 
 		/*calculates the overall invoice total*/
 		Resource.prototype.$getTotal = function(){
-			return (this.$getSubTotal() + this.$getTaxes()) - this.$getDiscounts();
+			return (this.$getSubTotal() - this.$getDiscounts()) + this.$getTaxes() ;
 		}
 
 		/*calculates the difference between paying amount and total invoice.*/
@@ -108,9 +114,12 @@
 		/*adds a product to the current invoice productlist, _d param must be a valid product object*/
 		Resource.prototype.$add = function(_d){
 			if(!this.product_list) this.product_list = [];
-			let index = _.findIndex(this.product_list, ['product_id._id', _d._id]);
+			let index = _.findIndex(this.product_list, ['_id', _d._id]);
 			if(index >= 0) this.product_list[index].qty++;
-			else this.product_list.push({product_id: _d, qty: 1});
+			else {
+				_d.qty = 1;
+				this.product_list.push(_d);
+			}
 		}
 
 		/*calculates the total amount of products in the invoice product list*/
