@@ -1,4 +1,4 @@
-(function () {
+(function(){
   'use strict';
 
   angular
@@ -11,7 +11,7 @@
     return {
       restrict: 'A',
       link: function ($scope, $element) {
-        $timeout(function () {
+        $timeout(function(){
           $element[0].focus();
         });
 

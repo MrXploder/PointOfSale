@@ -18,8 +18,8 @@ module.exports = function(grunt) {
   'public/src/directive/**/*.js',
   'public/src/factory/*.js',
   'public/src/filter/*.js',
-  'public/src/module/dialog/**/*.js',
-  'public/src/module/route/**/*.js'
+  'public/src/dialog/**/*.js',
+  'public/src/route/**/*.js'
   ];
 
   grunt.initConfig({
@@ -104,8 +104,8 @@ module.exports = function(grunt) {
         'public/src/directive/**/*.js',
         'public/src/factory/**/*.js',
         'public/src/filter/**/*.js',
-        'public/src/module/dialog/**/*.js',
-        'public/src/module/route/**/*.js'],
+        'public/src/dialog/**/*.js',
+        'public/src/route/**/*.js'],
         dest: 'public/dist/<%= gitinfo.local.branch.current.SHA %>.js',
       },
       css:{

@@ -13,37 +13,43 @@
 			requireLogin: true,
 		};
 
-		$urlRouterProvider.when('', '/home'); /*redirect to home if user loads a no-routed page e.x: host without #*/
+		$urlRouterProvider.when('', '/home'); /*redirect to home if user loads a no-routed page e.x: host without '#'  */
 		$urlRouterProvider.otherwise('/home'); /*if state does not exists, redirect to home*/
 
 		$stateProvider
 		.state("login", {
 			url: "/login",
-			templateUrl: "src/module/route/login/template.html",
+			templateUrl: "src/route/login/template.html",
 			controller: "loginController",
+			controllerAs: "$ctrl",
+			data: {requireLogin: false},
+		})
+		.state("logout", {
+			url: "/logout",
+			controller: "logoutController",
 			controllerAs: "$ctrl",
 			data: {requireLogin: false},
 		})
 		.state('home', {
 			url: '/home',
-			templateUrl: "src/module/route/home/template.html",
+			templateUrl: "src/route/home/template.html",
 			controller: "homeController",
 			controllerAs: "$ctrl",
-			data: requireBeforeChange,
+			data: {requireLogin: true},
 		})
 		.state('pos', {
 			url: '/pos',
-			templateUrl: 'src/module/route/pos/template.html',
+			templateUrl: 'src/route/pos/template.html',
 			controller: "posController",
 			controllerAs: "$ctrl",
-			data: requireBeforeChange,
+			data: {requireLogin: true},
 		})
 		.state('products', {
 			url: '/manageProducts',
-			templateUrl: 'src/module/route/manageProducts/template.html',
+			templateUrl: 'src/route/manageProducts/template.html',
 			controller: 'productsController',
 			controllerAs: '$ctrl',
-			data: requireBeforeChange,
+			data: {requireLogin: true},
 		})
 	}
 })();
